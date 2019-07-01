@@ -7,7 +7,7 @@ clear; clc;
 % save NPEP.mat SUB SUB_diagnosis
 
 % Reading different columns from the Psychometric data file
-file = '/Users/mac637-jbj-100/Desktop/Neurofeedback/NKI-merged demographic and assessment data_5.28.19.xlsx';
+file = '/home/rouse/conrad/NKI-merged demographic and assessment data_5.28.19.xlsx';
 
 raw_diagnosis_data = [readtable(file, 'Sheet', 'MEDICAL-Dx-LABS-Hx-Rx', 'Range', 'A:A'),...
                   readtable(file, 'Sheet', 'MEDICAL-Dx-LABS-Hx-Rx', 'Range', 'I:I')];
