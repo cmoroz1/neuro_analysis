@@ -26,5 +26,10 @@ combined = pd.merge(combined, psych_3, how='outer', on=psych_1.columns[0])
 n = pd.read_excel("NFB analysis subjects 7.5.19.xlsx")
 #filtering out subjects that we don't care about
 filtered = pd.merge(n, combined, how='left', on=n.columns[0])
+#replace blank values or ones that contain ! or ~ with -9999
+filtered.replace(to_replace=r'.*!+.*', value="-9999", regex=True, inplace=True)
+filtered.replace(to_replace=r'.*~+.*', value="-9999", regex=True, inplace=True)
+filtered.fillna('-9999', inplace=True)
+print(filtered)
 #output excel file with one combined, filtered table
 filtered.to_excel("filtered.xlsx")
