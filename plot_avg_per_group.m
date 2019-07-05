@@ -1,3 +1,6 @@
+clc; clear;
+load('NPEP_v3.mat') % called SUB & NP_data
+
 % Produce Fig. 1C (a graphical representation for visual inspection and validation of the approach for modelling neurofeedback regulation performance) 
 covered=1; coveredTrialOrders{1}=[];
 for s=1:length(SUB)
@@ -9,14 +12,14 @@ for s=1:length(SUB)
     % check if subject's trial order matches any of the covered trial orders
     match=0; coveredTrialOrders{covered}=[];
     for cvrd=1:covered
-        if ~isempty(coveredTrialOrders{cvrd});
+        if ~isempty(coveredTrialOrders{cvrd})
             
             % prepare current Trial Order string
             clear triOrd trialOrder; triOrd=char(coveredTrialOrders{cvrd});
             curTrialOrder=[]; for e=1:24; curTrialOrder=[curTrialOrder '            ' triOrd(e,:)]; end
             
             % compare subject and current trial orders
-            if strcmp(subTrialOrder,curTrialOrder); 
+            if strcmp(subTrialOrder,curTrialOrder)
                 match=1;
                 break; 
             end

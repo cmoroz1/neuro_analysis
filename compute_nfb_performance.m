@@ -1,5 +1,5 @@
 clc; clear;
-load('NPEP_v2.mat');        % called SUB
+load('NPEP_v2.mat'); % called SUB
 
 % build trial data structure 
 t_start=    [15 32  79 111 128 175 207 239 286 303 335 382]-1;
