@@ -1,22 +1,33 @@
 import pandas as pd
-import pprint
-#from numpy import genfromtxt
-#p1 = genfromtxt('/Users/Conrad/research/neuro_analysis/psych_1.csv', delimiter=',')
-p1 = pd.read_csv("/Users/Conrad/research/neuro_analysis/psych_1.csv")
-p3 = pd.read_csv("/Users/Conrad/research/neuro_analysis/psych_3.csv")
-#print(p1)
-#print(p3)
-all = pd.merge(p1, p3, how='outer', on=p1.columns[0])
-rel = pd.read_excel("/Users/Conrad/research/neuro_analysis/NFB_analysis_subjects_7.1.19.xlsx")
-print(rel)
-print(rel.columns)
-need = pd.merge(rel, all, how='left', on=p1.columns[0])
-print(need)
-need.to_excel("test.xlsx")
 """
-print(all)
-print(len(p1.columns))
-print(len(p3.columns))
-print(len(all.columns))
-all.to_excel("test.xlsx")
+Need to account for:
+-duplicate subject IDs
 """
+#reading csv files from each table
+psych_1 = pd.read_csv("psych_1.csv")
+psych_2 = pd.read_csv("psych_2.csv")
+psych_3 = pd.read_csv("psych_3.csv")
+print(psych_1.columns)
+print(psych_2.columns)
+print(psych_3.columns)
+"""
+#code used for checking whether there are duplicate columns
+for i in psych_1.columns:
+    if i in psych_2.columns:
+        print(i)
+    if i in psych_3.columns:
+        print(i)
+for i in psych_2.columns:
+    if i in psych_3.columns:
+        print(i)
+"""
+#combining 1 and 3
+combined = pd.merge(psych_1, psych_3, how='outer', on=psych_1.columns[0])
+#combining 1 and 3 and 2
+combined = pd.merge(psych_3, psych_2, how='outer', on=psych_1.columns[0])
+#reading the list of subjects that we care about
+n = pd.read_excel("NFB analysis subjects 7.5.19.xlsx")
+#filtering out subjects that we don't care about
+filtered = pd.merge(n, combined, how='left', on=n.columns[0])
+#print(filtered)
+#filtered.to_excel("test.xlsx")
