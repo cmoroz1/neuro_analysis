@@ -70,3 +70,5 @@ for s=1:length(SUB)
 end
 % replace missing entries with NaN to enable accurate computations of means later on
 NPEP_grand_linear(NPEP_grand_linear==0)=NaN;
+
+save NPEP_v3.mat SUB NP_data
