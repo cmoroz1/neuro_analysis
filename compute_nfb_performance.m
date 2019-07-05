@@ -1,5 +1,5 @@
 clc; clear;
-load('NPEP_v2.mat'); % called SUB
+load('NPEP_v2.mat'); % called SUB & ClinicalStatus
 
 % build trial data structure 
 t_start=    [15 32  79 111 128 175 207 239 286 303 335 382]-1;
@@ -71,4 +71,4 @@ end
 % replace missing entries with NaN to enable accurate computations of means later on
 NPEP_grand_linear(NPEP_grand_linear==0)=NaN;
 
-save NPEP_v3.mat SUB NP_data
+save NPEP_v3.mat SUB NP_data ClinicalStatus

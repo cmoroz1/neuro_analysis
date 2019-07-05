@@ -23,13 +23,13 @@ for nfb_sub = 1:length(SUB)
     end
 end
 
-save NPEP_v2.mat SUB
 
+for nfb_sub=1:length(SUB); 
+    if ~isempty(SUB(nfb_sub).status); ClinicalStatus(nfb_sub,:)=SUB(nfb_sub).status; 
+    else ClinicalStatus(nfb_sub,:)=999;  
+    end 
+end
+% Delete the four unclassified subjects that have missing diagnostic data
+SUB(ClinicalStatus==999)=[] ;    ClinicalStatus(ClinicalStatus==999)=[] ;
 
-% for nfb_sub=1:length(SUB); 
-%     if ~isempty(SUB(nfb_sub).status); ClinicalStatus(nfb_sub,:)=SUB(nfb_sub).status; 
-%     else ClinicalStatus(nfb_sub,:)=999;  
-%     end 
-% end
-% % Delete the four unclassified subjects that have missing diagnostic data
-% SUB(ClinicalStatus==999)=[] ;    ClinicalStatus(ClinicalStatus==999)=[] ;  
+save NPEP_v2.mat SUB ClinicalStatus

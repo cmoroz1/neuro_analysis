@@ -1,5 +1,5 @@
 clc; clear;
-load('NPEP_v3.mat') % called SUB & NP_data
+load('NPEP_v3.mat') % called SUB & NP_data & ClinicalStatus
 
 % Produce Fig. 1C (a graphical representation for visual inspection and validation of the approach for modelling neurofeedback regulation performance) 
 covered=1; coveredTrialOrders{1}=[];
