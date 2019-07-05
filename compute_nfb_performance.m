@@ -1,10 +1,13 @@
+clc; clear;
+load('NPEP_v2.mat');        % called SUB
+
 % build trial data structure 
 t_start=    [15 32  79 111 128 175 207 239 286 303 335 382]-1;
 t_end=      [29 76 108 125 172 204 236 283 300 332 379 396];
 % note: the  2nd, 5th, 8th and 11th trials are always the long 90 second trials
 for s=1:length(SUB)
     SUB(s).trialOrder=[];
-    for t=1:12;
+    for t=1:12
         
         SUB(s).trial(t).num = t;                                          % ~ 1-12
         SUB(s).trial(t).type = SUB(s).instruction(t_start(t)+1);      % ~ Focus / Wander

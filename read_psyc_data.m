@@ -22,7 +22,7 @@ for i = 1:height(raw_diagnosis_data)
     end
 end
 
-%save('diagnosis_data.mat', 'diagnosis_data');
+save('diagnosis_data.mat', 'diagnosis_data');
 
 %% Testing for reading multiple different columns from different Excel sheets from the same Excel file
 % %DEMO-SCANinfo _2017... (2)    Columns: BZ, EV, ABG, ABT
@@ -42,11 +42,11 @@ end
 %            readtable(file, 'Sheet', 'PSYCHOMETRICS(1)_20170713', 'Range', 'IH:II'),...
 %            readtable(file, 'Sheet', 'PSYCHOMETRICS(1)_20170713', 'Range', 'JO:JR')];
 
-%PSYCH2 Columns: AR:AV,EO:FF,HT:HY
-psych_2 = [readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'A:A'),...
-           readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'AR:AV'),...
-           readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'EO:FF'),...
-           readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'HT:HY')];
+% %PSYCH2 Columns: AR:AV,EO:FF,HT:HY
+% psych_2 = [readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'A:A'),...
+%            readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'AR:AV'),...
+%            readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'EO:FF'),...
+%            readtable(file, 'Sheet', 'PSYCHOMETRICS(2)-20170713', 'Range', 'HT:HY')];
 
 % %PSYCH3 Columns:
 % %AY:BC,DL:DQ,DR,DS,DT:DX,NU:OH,OK:OM,OW:OY,TK:TN,TP:UA,ZC:ZF

@@ -23,6 +23,8 @@ for nfb_sub = 1:length(SUB)
     end
 end
 
+save NPEP_v2.mat SUB
+
 
 % for nfb_sub=1:length(SUB); 
 %     if ~isempty(SUB(nfb_sub).status); ClinicalStatus(nfb_sub,:)=SUB(nfb_sub).status; 

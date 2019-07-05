@@ -61,6 +61,8 @@ for s=2:length(SUB_info{1})
             SUB(nfb_sub).right_text =   SUB_NFB{5};
             
             nfb_sub = nfb_sub + 1;
+        else
+            disp("Couldn't find " + SUB_info{1}{s});
         end
     end
 end
