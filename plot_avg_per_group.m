@@ -66,6 +66,12 @@ for s=1:length(SUB)
     ylabel('neurofeedback display (angular position)', 'FontSize', 16);
     xlim([0 length(mean(NP_data( SxT_ClinicalStatus>=1,:)))])
     ylim([0 180 ])
+    
+    SUB( subs_withSameTrialOrders{covered}(1) ).NP_linear = [];
+    for t=1:12
+        SUB( subs_withSameTrialOrders{covered}(1) ).NP_linear = [SUB( subs_withSameTrialOrders{covered}(1) ).NP_linear SUB( subs_withSameTrialOrders{covered}(1) ).trial(t).ideal_NP_linear];
+    end
+    
     plot(SUB( subs_withSameTrialOrders{covered}(1) ).NP_linear, 'Color', [1 1 0], 'LineWidth', 1.5); % Yellow
     plot(mean(NP_data( SxT_ClinicalStatus==1,:) ), 'Color', [0.8008    0.5195    0.2461], 'LineStyle',':', 'LineWidth', 2); %LightBrown~"Peru" 
     plot(mean(NP_data( SxT_ClinicalStatus==2,:) ), 'Color', [0 0 1], 'LineStyle', '--', 'LineWidth', 1); %Blue
