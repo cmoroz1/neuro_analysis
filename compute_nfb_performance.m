@@ -72,3 +72,4 @@ end
 NPEP_grand_linear(NPEP_grand_linear==0)=NaN;
 
 save NPEP_v3.mat SUB NP_data ClinicalStatus
+save corr_val NPEP_grand_linear
