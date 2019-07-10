@@ -48,8 +48,8 @@ for s=2:length(SUB_info{1})
       else
         % Example path name for a neurofeedback.csv file
         %/Users/Chris/Desktop/Test/A00034854/A00034854neurofeedback.csv
-        if isfile("/Users/Chris/Desktop/Test/A00034854/" + SUB_info{1}{s} + "neurofeedback.csv")
-            fileID=fopen("/Users/Chris/Desktop/Test/A00034854/" + SUB_info{1}{s} + "neurofeedback.csv");
+        if isfile("/Users/mac637-jbj-100/Desktop/Neurofeedback/BIDS_TEST/Data/output/sub-" + SUB_info{1}{s} + "/ses-NFB3/func/" + SUB_info{1}{s} + "_neurofeedback.csv")
+            fileID=fopen("/Users/mac637-jbj-100/Desktop/Neurofeedback/BIDS_TEST/Data/output/sub-" + SUB_info{1}{s} + "/ses-NFB3/func/" + SUB_info{1}{s} + "_neurofeedback.csv");
             SUB_NFB=textscan(fileID,'%s %s %s %s %s %s %s %s %s %s','delimiter',{','});
             SUB(nfb_sub).id =           SUB_info{1}{s};
             SUB(nfb_sub).age =          SUB_info{2}{s};
