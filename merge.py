@@ -1,4 +1,5 @@
 import pandas as pd
+from scipy import stats
 #reading csv files from each table
 psych_1 = pd.read_csv("psych_1.csv")
 psych_2 = pd.read_csv("psych_2.csv")
@@ -30,8 +31,23 @@ n = pd.merge(n, trials, how='outer', on=subject_id_column)
 #filtering out subjects that we don't care about
 filtered = pd.merge(n, combined, how='left', on=subject_id_column)
 #replace blank values or ones that contain ! or ~ with -9999
-filtered.replace(to_replace=r'.*!+.*', value="-9999", regex=True, inplace=True)
-filtered.replace(to_replace=r'.*~+.*', value="-9999", regex=True, inplace=True)
-filtered.fillna('-9999', inplace=True)
+filtered.replace(to_replace=r'.*!+.*', value=float('NaN'), regex=True, inplace=True)
+filtered.replace(to_replace=r'.*~+.*', value=float('NaN'), regex=True, inplace=True)
+filtered.fillna(float('NaN'), inplace=True)
+#running correlations on DMN_NF_2ndHalf
+dropped = filtered.dropna()
+for i in range(10, len(dropped.columns)):
+    #print(dropped.columns[i])
+    rho, pval = stats.spearmanr(dropped.DMN_NF_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+for i in range(10, len(dropped.columns)):
+    rho, pval = stats.spearmanr(dropped.DMN_NF_UP_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_UP_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+for i in range(10, len(dropped.columns)):
+    rho, pval = stats.spearmanr(dropped.DMN_NF_DN_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_DN_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
 #output excel file with one combined, filtered, added table (but without order indicator)
 filtered.to_excel("added.xlsx")
