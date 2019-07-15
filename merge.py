@@ -24,7 +24,7 @@ combined = pd.merge(combined, psych_3, how='outer', on=subject_id_column)
 #reading the list of subjects that we care about
 n = pd.read_excel("NFB analysis subjects 7.5.19.xlsx")
 #read trials csv files
-trials = pd.read_csv("subj_groups_and_corr.csv")
+trials = pd.read_csv("DMN_NF_stats.csv")
 #merge trials into the n subjects file
 n = pd.merge(n, trials, how='outer', on=subject_id_column)
 #filtering out subjects that we don't care about
