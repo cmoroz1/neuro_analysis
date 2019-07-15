@@ -28,16 +28,36 @@ n = pd.read_excel("NFB analysis subjects 7.5.19.xlsx")
 trials = pd.read_csv("DMN_NF_stats.csv")
 #merge trials into the n subjects file
 n = pd.merge(n, trials, how='outer', on=subject_id_column)
+#reading and adding in 90_stats file
+ninety = pd.read_csv("DMN_NF_90_stats.csv")
+n = pd.merge(n, ninety, how='outer', on=subject_id_column)
 #filtering out subjects that we don't care about
 filtered = pd.merge(n, combined, how='left', on=subject_id_column)
 #replace blank values or ones that contain ! or ~ with -9999
 filtered.replace(to_replace=r'.*!+.*', value=float('NaN'), regex=True, inplace=True)
 filtered.replace(to_replace=r'.*~+.*', value=float('NaN'), regex=True, inplace=True)
 filtered.fillna(float('NaN'), inplace=True)
-#running correlations on DMN_NF_2ndHalf
-dropped = filtered.dropna()
+
+#running correlations on DMN_NF_2ndHalf, DMN_NF_UP_2ndHalf, DMN_NF_DN_2ndHalf
+#first on clinical_status=0
+dropped = filtered.loc[filtered['Clinical_Status'] == 0].dropna()
+print("Clinical_Status=0")
 for i in range(10, len(dropped.columns)):
-    #print(dropped.columns[i])
+    rho, pval = stats.spearmanr(dropped.DMN_NF_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+for i in range(10, len(dropped.columns)):
+    rho, pval = stats.spearmanr(dropped.DMN_NF_UP_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_UP_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+for i in range(10, len(dropped.columns)):
+    rho, pval = stats.spearmanr(dropped.DMN_NF_DN_2ndHalf,dropped[dropped.columns[i]])
+    if pval <= 0.05:
+        print("DMN_NF_DN_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+#next on clinical_status=1
+dropped = filtered.loc[filtered['Clinical_Status'] == 1].dropna()
+print("Clinical_Status=1")
+for i in range(10, len(dropped.columns)):
     rho, pval = stats.spearmanr(dropped.DMN_NF_2ndHalf,dropped[dropped.columns[i]])
     if pval <= 0.05:
         print("DMN_NF_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
