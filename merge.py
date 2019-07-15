@@ -1,5 +1,21 @@
 import pandas as pd
 from scipy import stats
+
+#does a one-to-all correlation and returns a sorted dataframe of correlation values
+def correlate(full, column_name, start=10, sort_by="pval"):
+    d_rho = {}
+    d_pval = []
+    for i in range(start, len(full.columns)):
+        rho, pval = stats.spearmanr(full[column_name],full[full.columns[i]])
+        d_rho[full.columns[i]] = rho
+        d_pval.append(pval)
+    df = pd.Series(d_rho).to_frame()
+    df.columns = [column_name + "_rho"]
+    df[column_name + "_pval"] = d_pval
+    df = df.sort_values(column_name + "_pval")
+    return df
+def print_significant(frame):
+    print(frame.loc[frame[frame.columns[1]] <= 0.05].to_string())
 #reading csv files from each table
 psych_1 = pd.read_csv("psych_1.csv")
 psych_2 = pd.read_csv("psych_2.csv")
@@ -39,35 +55,24 @@ filtered.replace(to_replace=r'.*~+.*', value=float('NaN'), regex=True, inplace=T
 filtered.fillna(float('NaN'), inplace=True)
 
 #running correlations on DMN_NF_2ndHalf, DMN_NF_UP_2ndHalf, DMN_NF_DN_2ndHalf
-#first on clinical_status=0
+#first on clinical_status==0
+print("Clinical Status == 0")
 dropped = filtered.loc[filtered['Clinical_Status'] == 0].dropna()
-print("Clinical_Status=0")
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_UP_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_UP_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_DN_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_DN_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
-#next on clinical_status=1
+DMN_NF_2ndHalf = correlate(dropped, "DMN_NF_2ndHalf")
+DMN_NF_UP_2ndHalf = correlate(dropped, "DMN_NF_UP_2ndHalf")
+DMN_NF_DN_2ndHalf = correlate(dropped, "DMN_NF_DN_2ndHalf")
+print_significant(DMN_NF_2ndHalf)
+print_significant(DMN_NF_UP_2ndHalf)
+print_significant(DMN_NF_DN_2ndHalf)
+#next on clinical_status==1
+print("\nClinical Status == 1\n")
 dropped = filtered.loc[filtered['Clinical_Status'] == 1].dropna()
-print("Clinical_Status=1")
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_UP_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_UP_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
-for i in range(10, len(dropped.columns)):
-    rho, pval = stats.spearmanr(dropped.DMN_NF_DN_2ndHalf,dropped[dropped.columns[i]])
-    if pval <= 0.05:
-        print("DMN_NF_DN_2ndHalf with", dropped.columns[i], "rho =", rho, "p =", pval)
+DMN_NF_2ndHalf = correlate(dropped, "DMN_NF_2ndHalf")
+DMN_NF_UP_2ndHalf = correlate(dropped, "DMN_NF_UP_2ndHalf")
+DMN_NF_DN_2ndHalf = correlate(dropped, "DMN_NF_DN_2ndHalf")
+print_significant(DMN_NF_2ndHalf)
+print_significant(DMN_NF_UP_2ndHalf)
+print_significant(DMN_NF_DN_2ndHalf)
+
 #output excel file with one combined, filtered, added table (but without order indicator)
 filtered.to_excel("added.xlsx")
